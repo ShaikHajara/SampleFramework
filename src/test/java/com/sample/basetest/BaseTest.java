@@ -8,12 +8,11 @@ import org.testng.annotations.BeforeClass;
 
 import com.sample.config.ReadConfigFile;
 
-
 public class BaseTest {
 
 	public WebDriver driver;
 	ReadConfigFile readConfigFile;
-	
+
 	public String isPageLoaded() {
 		final JavascriptExecutor js = (JavascriptExecutor) driver;
 		final String state = js.executeScript("return document.readyState").toString();

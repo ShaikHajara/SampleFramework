@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class ReadConfigFile {
-	
+
 	public Properties prop;
 	public FileInputStream fis;
 	public String geckodriverPath;
@@ -31,8 +31,8 @@ public class ReadConfigFile {
 	public void getProperties() {
 
 		try {
-			File configFileFromResources = new File("src/main/resources/config/config.properties");
-			final String path=configFileFromResources.getAbsolutePath();
+			final File configFileFromResources = new File("src/main/resources/config/config.properties");
+			final String path = configFileFromResources.getAbsolutePath();
 			fis = new FileInputStream(path);
 		} catch (final FileNotFoundException e) {
 			// TODO Auto-generated catch block

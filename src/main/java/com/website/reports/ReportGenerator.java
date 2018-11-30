@@ -20,46 +20,25 @@ import com.relevantcodes.extentreports.LogStatus;
 
 public class ReportGenerator implements IReporter {
 	private ExtentReports extent;
-	@Override
-	public void generateReport(List<XmlSuite> xmlSuites, List<ISuite> suites, String outputDirectory) {
-		// TODO Auto-generated method stub
-		extent = new ExtentReports(outputDirectory + File.separator
-				+ "Extent.html", true);
-
-		for (ISuite suite : suites) {
-			Map<String, ISuiteResult> result = suite.getResults();
-
-			for (ISuiteResult r : result.values()) {
-				ITestContext context = r.getTestContext();
-
-				buildTestNodes(context.getPassedTests(), LogStatus.PASS);
-				buildTestNodes(context.getFailedTests(), LogStatus.FAIL);
-				buildTestNodes(context.getSkippedTests(), LogStatus.SKIP);
-			}
-		}
-
-		extent.flush();
-		extent.close();
-	}
 
 	private void buildTestNodes(IResultMap tests, LogStatus status) {
 		ExtentTest test;
 
 		if (tests.size() > 0) {
-			for (ITestResult result : tests.getAllResults()) {
+			for (final ITestResult result : tests.getAllResults()) {
 				test = extent.startTest(result.getMethod().getMethodName());
 
 				test.setStartedTime(getTime(result.getStartMillis()));
 				test.setEndedTime(getTime(result.getEndMillis()));
 
-				for (String group : result.getMethod().getGroups())
+				for (final String group : result.getMethod().getGroups()) {
 					test.assignCategory(group);
+				}
 
 				if (result.getThrowable() != null) {
 					test.log(status, result.getThrowable());
 				} else {
-					test.log(status, "Test " + status.toString().toLowerCase()
-							+ "ed");
+					test.log(status, "Test " + status.toString().toLowerCase() + "ed");
 				}
 
 				extent.endTest(test);
@@ -67,11 +46,30 @@ public class ReportGenerator implements IReporter {
 		}
 	}
 
+	@Override
+	public void generateReport(List<XmlSuite> xmlSuites, List<ISuite> suites, String outputDirectory) {
+		// TODO Auto-generated method stub
+		extent = new ExtentReports(outputDirectory + File.separator + "Extent.html", true);
+
+		for (final ISuite suite : suites) {
+			final Map<String, ISuiteResult> result = suite.getResults();
+
+			for (final ISuiteResult r : result.values()) {
+				final ITestContext context = r.getTestContext();
+
+				buildTestNodes(context.getPassedTests(), LogStatus.PASS);
+				buildTestNodes(context.getFailedTests(), LogStatus.FAIL);
+				buildTestNodes(context.getSkippedTests(), LogStatus.SKIP);
+			}
+		}
+		extent.flush();
+		extent.close();
+	}
+
 	private Date getTime(long millis) {
-		Calendar calendar = Calendar.getInstance();
+		final Calendar calendar = Calendar.getInstance();
 		calendar.setTimeInMillis(millis);
 		return calendar.getTime();
 	}
-
 
 }

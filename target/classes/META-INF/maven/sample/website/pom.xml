@@ -7,7 +7,7 @@
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>website</name>  
+  <name>website</name>    
    <build>
 		<pluginManagement>		
 			<plugins>			
@@ -30,10 +30,58 @@
 							<suiteXmlFile>src/main/resources/testng/testng.xml</suiteXmlFile>
 						</suiteXmlFiles>
 					</configuration>
-				</plugin>
-			</plugins>
-		</pluginManagement>
-	</build>  
+				</plugin>			
+        <plugin>
+        <groupId>ch.fortysix</groupId>
+        <artifactId>maven-postman-plugin</artifactId>
+        <executions>
+        <execution>
+		<id>send a mail</id>
+        <phase>test</phase>
+        <goals>
+        <goal>send-mail</goal>
+        </goals>
+        <inherited>true</inherited>
+ 
+        <configuration>
+        <!-- From Email address -->
+        <from>from@gmail.com</from>
+        <!--  Email subject -->
+        <subject>Test Automation Report</subject>
+        <!-- Fail the build if the mail doesnt reach -->
+        <failonerror>true</failonerror>
+        <!-- host -->
+        <mailhost>smtp.gmail.com</mailhost>
+        <!-- port of the host -->
+        <mailport>465</mailport>
+        <mailssl>true</mailssl>
+        <mailAltConfig>true</mailAltConfig>
+        <!-- Email Authentication(USername and Password) -->
+        <mailuser>yourEmail@mail.com</mailuser>
+        <mailpassword>yourPassword</mailpassword>
+        <receivers>
+        <!-- To Email address -->
+        <receiver>to@gmail.com</receiver>
+        </receivers>
+       <fileSets>
+       <fileSet>
+       <!-- Report directory Path -->
+       <directory>C://workspace//SendMavenEmail//Reports</directory>
+       <includes>
+       <!-- Report file name -->
+       <include>TestReport.html</include>
+       </includes>
+       <!-- Use Regular Expressions like **/*.html if you want all the html files to send-->
+       </fileSet>
+       </fileSets> 
+       </configuration>
+       </execution>
+       </executions>
+       </plugin>
+       </plugins> 
+	   </pluginManagement>
+     </build> 
+
   <url>http://maven.apache.org</url>
 
   <properties>
