@@ -8,6 +8,8 @@ import org.testng.annotations.BeforeClass;
 
 import com.sample.config.ReadConfigFile;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
+
 public class BaseTest {
 
 	public WebDriver driver;
@@ -47,4 +49,15 @@ public class BaseTest {
 		}
 	}
 
+	public void setupUsingWebDriverManager(String Browser) {
+
+		switch (Browser) {
+		case "Firefox":
+			WebDriverManager.firefoxdriver().setup();
+			driver = new FirefoxDriver();
+		case "Chrome":
+			WebDriverManager.chromedriver().setup();
+			driver = new ChromeDriver();
+		}
+	}
 }
