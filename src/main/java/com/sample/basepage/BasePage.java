@@ -27,7 +27,7 @@ public class BasePage {
 	public void assertEquals(WebElement ele, String expected) {
 		try {
 			final String actual = ele.getText();
-			Assert.assertEquals(actual, expected, "Both strings are not equal.Actual string is" + actual);
+			Assert.assertEquals(actual, expected, "Both strings are not equal.Actual string is:" + actual);
 		} catch (final Exception e) {
 			e.printStackTrace();
 		}
